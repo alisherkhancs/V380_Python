@@ -3,7 +3,7 @@
 import sys
 import requests
 from time import sleep
-import cv2
+import cv2  # type: ignore
 
 # Windows compatibility for getch
 try:
@@ -12,10 +12,11 @@ try:
         return msvcrt.getch().decode('utf-8', errors='ignore')
 except ImportError:
     try:
-        import getch
+        import importlib
+        _getch = importlib.import_module('getch')
         def get_key():
-            return getch.getch()
-    except ImportError:
+            return _getch.getch()
+    except Exception:
         def get_key():
             return input()
 
